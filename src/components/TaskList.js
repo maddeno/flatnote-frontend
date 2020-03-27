@@ -25,6 +25,37 @@ class TaskList extends Component {
     this.props.showForm(taskId)
   }
 
+  updateNote = (noteToUpdate) => {
+    const reqObj = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: noteToUpdate,
+        status: 'done'
+      })
+    }
+    fetch(`http://localhost:3000/notes/${noteToUpdate}`, reqObj)
+    .then(resp => resp.json())
+    .then(respObj => {this.props.updateNotesArray()}) 
+  }
+
+  deleteNote = (noteToDelete) => {
+    const reqObj = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }
+    fetch(`http://localhost:3000/notes/${noteToDelete}`, reqObj)
+    .then(resp => resp.json())
+    .then(respObj => {this.props.updateNotesArray()}) 
+  }
+
+
   render () {
     return (
       <div>
@@ -38,7 +69,7 @@ class TaskList extends Component {
             return note.task_id === task.id
           }).map(filteredNote => {
             return <li>
-              <Note note={filteredNote}/>
+              <Note deleteNote={this.deleteNote} updateNote={this.updateNote} note={filteredNote}/>
             </li>
 
           })}

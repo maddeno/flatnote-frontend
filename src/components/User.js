@@ -30,7 +30,6 @@ class User extends Component {
     }
 
     createNote = (newNoteObj) => {
-        console.log(newNoteObj)
         const reqObj = {
           method: 'POST',
           headers: {
@@ -39,18 +38,17 @@ class User extends Component {
           },
           body: JSON.stringify(newNoteObj)
         }
-        console.log(reqObj)
         fetch(`http://localhost:3000/notes`, reqObj)
         .then(resp => {
             return resp.json()
         }).then(respObj => {
-            this.addNewNote(respObj)
+            this.updateNotesArray(respObj)
         })
         this.showForm()   
       }
     
 
-    addNewNote = () => {
+    updateNotesArray = () => {
         fetch(`http://localhost:3000/users/${this.state.currentUser.id}/get_notes`)
         .then(resp => resp.json())
         .then(noteData => this.setState({
@@ -63,7 +61,7 @@ class User extends Component {
         return (
             <div>
                 <h1>Hello, {this.state.currentUser.username}!</h1>
-                {this.state.showForm ? <NewNoteForm createNote={this.createNote} currentUser={this.state.currentUser} taskId={this.state.formTaskId} /> : <TaskList showForm={this.showForm} notes={this.state.notes} addNewNote={this.addNewNote} />}
+                {this.state.showForm ? <NewNoteForm createNote={this.createNote} currentUser={this.state.currentUser} taskId={this.state.formTaskId} /> : <TaskList updateNotesArray={this.updateNotesArray} showForm={this.showForm} notes={this.state.notes} addNewNote={this.addNewNote} />}
             </div>
         )
     }
