@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Navbar from './components/Navbar';
+import Welcome from './components/Welcome';
+import User from './components/User';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      currentUser: null
+    }
+  }
+
+  login = (username) => {
+    fetch(`http://localhost:3000/users/find_by_username?username=${username}`)
+    .then(resp => resp.json())
+    .then(userData => this.setState({
+      currentUser: userData
+    }))
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar currentUser={this.state.currentUser} login={this.login}/>
+        {this.state.currentUser ? <User currentUser={this.state.currentUser} /> : <Welcome/>}
+      </div>
+    )
+  }
 }
 
 export default App;
