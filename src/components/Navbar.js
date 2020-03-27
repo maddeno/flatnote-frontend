@@ -13,6 +13,10 @@ class Navbar extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ currentUser: nextProps.currentUser });  
+  }
+
   renderLoginForm = () => {
     this.setState({
         showLogin: !this.state.showLogin
@@ -25,9 +29,6 @@ class Navbar extends React.Component {
       })
   }
 
-  handleLogout = () => {
-
-  }
 
   render() {
     return (
@@ -35,15 +36,15 @@ class Navbar extends React.Component {
         <div className="center menu">
             {this.state.currentUser ? 
                 <div className="item">
-                    <button>Logout</button>
+                    <button onClick={() => this.props.handleLogout()}>Logout</button>
                 </div>:
                 <div className="item">
                     <button onClick={this.renderLoginForm}>Login</button>
                     <button onClick={this.renderSignUpForm}>Sign Up</button>
                 </div>
             }
-            {this.state.showLogin ? <Login login={this.props.login} /> : null}
-            {this.state.showSignUp ? <SignUp/> : null}
+            {this.state.showLogin ? <Login hideForm={this.renderLoginForm} login={this.props.login} /> : null}
+            {this.state.showSignUp ? <SignUp hideForm={this.renderSignUpForm} signup={this.props.signup}/> : null}
         </div>
       </div>
     );

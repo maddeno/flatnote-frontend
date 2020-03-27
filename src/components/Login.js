@@ -12,6 +12,7 @@ class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.login(this.state.username)
+        this.props.hideForm()
     }
 
     handleChange = (event) => {

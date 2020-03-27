@@ -6,7 +6,7 @@ class NewNoteForm extends Component {
         super (props)
         this.state = {
             task_id: this.props.taskId,
-            user_id: this.props.userId,
+            user_id: this.props.currentUser.id,
             status: 'not done'
         }
     }

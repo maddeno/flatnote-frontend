@@ -9,11 +9,23 @@ class SignUp extends Component {
         }
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.signup(this.state.username)
+        this.props.hideForm()
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            username: event.target.value
+        })
+    }
+
     render () {
         return (
             <div>
-              <form >
-                <input name={'username'} onChange={this.handleInputChange} value={this.state.username} />
+              <form onSubmit={ this.handleSubmit }>
+                <input name={'username'} onChange={this.handleChange}/>
                 <input type='submit' value='sign up' />
               </form>
             </div>

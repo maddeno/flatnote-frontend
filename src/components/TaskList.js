@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import Note from './Note'
-import NewNoteForm from './NewNoteForm'
 
 
 class TaskList extends Component {
@@ -22,35 +21,14 @@ class TaskList extends Component {
     }))
   }
 
-  handleClick = () => {
-    this.setState({
-      showNewNoteForm: !this.state.showNewNoteForm
-    })
-  }
-
-  createNote = (newNoteObj) => {
-    console.log(newNoteObj)
-    const reqObj = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(newNoteObj)
-    }
-    console.log(reqObj)
-    fetch(`http://localhost:3000/notes`, reqObj)
-    .then(resp => {
-        console.log(resp)
-        return resp.json()
-    }).then(respObj => {
-        this.props.addNewNote(respObj)
-    })    
+  handleClick = (taskId) => {
+    this.props.showForm(taskId)
   }
 
   render () {
     return (
       <div>
+        <h2>Here are your current notes:</h2>
         {this.state.tasks.map(task => {
           return <ul>
             <h3>
@@ -65,9 +43,8 @@ class TaskList extends Component {
 
           })}
           <li>
-            <button onClick={() => this.handleClick()}>+ new {task.category} note</button>
+            <button onClick={() => this.handleClick(task.id)}>+ new {task.category} note</button>
           </li>
-          {this.state.showNewNoteForm ? <NewNoteForm userId={this.props.currentUser.id} taskId={task.id} createNote={this.createNote}/> : null}
           </ul>
         })}
         
@@ -76,46 +53,6 @@ class TaskList extends Component {
     )
   }
 
-  // render () {
-  //   return (
-  //     <table className="ui celled striped padded table">
-  //       <tbody>
-  //         <tr>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[0]}
-  //             </h3>
-  //           </th>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[1]}
-  //             </h3>
-  //           </th>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[2]}
-  //             </h3>
-  //           </th>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[3]}
-  //             </h3>
-  //           </th>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[4]}
-  //             </h3>
-  //           </th>
-  //           <th>
-  //             <h3 className="ui center aligned header">
-  //               {this.state.tasks[5]}
-  //             </h3>
-  //           </th>
-  //         </tr>
-  //       </tbody>
-  //     </table>
-  //   )
-  // }
 
 }
 

@@ -22,10 +22,35 @@ class App extends Component {
     }))
   }
 
+  logout = () => {
+    this.setState({
+      currentUser: null
+    })
+  }
+
+  signup = (username) => {
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username
+      })
+    }
+
+    fetch('http://localhost:3000/users', reqObj)
+    .then(resp => resp.json())
+    .then(userData => this.setState({
+      currentUser: userData
+    }))
+  }
+
   render() {
     return (
       <div>
-        <Navbar currentUser={this.state.currentUser} login={this.login}/>
+        <Navbar currentUser={this.state.currentUser} login={this.login} handleLogout={this.logout} signup={this.signup} />
         {this.state.currentUser ? <User currentUser={this.state.currentUser} /> : <Welcome/>}
       </div>
     )
