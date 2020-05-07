@@ -18,7 +18,7 @@
 ### Installing:
   - clone this repo to your local machine ```git@github.com:maddeno/flatnote-frontend.git```
   - run ```npm start``` to run the server.
-  - to start the full app don't forget to install the back-end https://github.com/maddeno/backend_flatnote
+  - to start the full app don't forget to install and run the back-end https://github.com/maddeno/backend_flatnote
 
 ![](images/screenshot.png)
 
