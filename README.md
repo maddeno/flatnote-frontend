@@ -7,7 +7,10 @@
 ### Demo: https://drive.google.com/open?id=1rW8R_mAbXNXwHNujyfmeWIc8THs9y9vM
 
 ### Front-end Features:
-  - 
+  - React Components
+  - Full CRUD funtionality for Notes
+  - Conditional Rendering
+  - Fetch
 
 ### Technologies: 
   - React 16.13.1
